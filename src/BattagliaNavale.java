@@ -13,6 +13,7 @@ public class BattagliaNavale {
         final String MID_CENTER = "           ";
 
         boolean gameOver = false;
+        //to skip the intro
         boolean skip = false;
 
         System.out.println(TURN_LINE);
@@ -62,7 +63,7 @@ public class BattagliaNavale {
                     N = input.nextInt();
                 }while (N<5);
                 // Generate an empty table for each player,
-                // an empty table to display the player actions,
+                // to display and to track the player actions,
                 String[][] playerTable = generateTable(N);
                 String[][] botTable = generateTable(N);
                 String[][] gameTable = generateTable(N);
@@ -71,10 +72,8 @@ public class BattagliaNavale {
                 int dimShip = N/5+1;
                 int hpPlayer = dimShip*numShip;
                 int hpBot = dimShip*numShip;
-                // Displays a table for a better UX
                 System.out.println();
-                printTable(playerTable);
-                // Set the variables for the position of the ships
+                // Init the variables for the position of the ships
                 boolean valid;
                 int x;
                 int y;
@@ -84,6 +83,8 @@ public class BattagliaNavale {
                 // Check if the ship CAN be created
                     valid=false;
                     do {
+                        // Displays a table for a better UX
+                        printTable(playerTable);
                         //
                         System.out.println(CENTER + "Hai a disposizione "+ numShip + " nave/i di dimensione " + dimShip);
                         System.out.println(CENTER + "Stai posizionando la "+ i + "ª nave");
@@ -106,10 +107,10 @@ public class BattagliaNavale {
                             valid = true;
                         };
                     }while(!valid);
-                    System.out.println( CENTER + "[✓] Nave posizionata con successo! [✓]\n");
                 // Since it passed all controls, edit the tables with the ships
                 // V2.0: Draw n ships into the table
                     setShip(playerTable, x, y, orientation, dimShip);
+                    System.out.println( CENTER + "[✓] Nave posizionata con successo! [✓]\n");
                     setBotShip(botTable, dimShip);
                 }
                 //TURNs:
@@ -297,7 +298,7 @@ public class BattagliaNavale {
     }
 
     public static boolean validateShot(String[][] table, int x, int y, boolean bot){
-        // Checks if the target is outofbounds or already targeted, returns false.
+        // if the target is outofbounds or already targeted, returns false.
         boolean valid = true;
         if(checkOverflow(table.length, x, y)){
             // if already targeted
@@ -343,8 +344,9 @@ public class BattagliaNavale {
 //  GAME FUNCTIONs ////
     public static int shoot(String[][] botTable, String[][] gameTable, int x, int y, int hp){
         // Edit the table with the effect on that coordinate and return the hp(that might be edited)
-        // Do all the checking on the bot table and copying it on the game table, so the ships remains hidden
+        // Do all the controls on the bot table and copying it on the game table, so the ships remains hidden
         String center = "                                                               ";
+        // hit
         if (Objects.equals(botTable[x][y], "@")){
             botTable[x][y] = "X";
             gameTable[x][y] = "X";
@@ -353,6 +355,7 @@ public class BattagliaNavale {
             System.out.println(center + "╰(°▽°)╯ ╰(°▽°)╯ ╰(°▽°)╯\n");
 
         } else {
+            //miss
             botTable[x][y] = "O";
             gameTable[x][y] = "O";
             System.out.println(center + "       Mancato!");
