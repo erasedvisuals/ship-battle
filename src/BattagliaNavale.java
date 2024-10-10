@@ -8,6 +8,7 @@ public class BattagliaNavale {
     public static void main(String[] args) {
 
         Scanner input = new Scanner(System.in);
+        // layout purpose only
         final String TURN_LINE = "(¯`·.¸¸.·´¯`·.¸¸.·´¯`·.¸¸.·´¯`·.¸¸.·´¯`·.¸¸.·´¯`·.¸¸.·´¯`·.¸¸.·´¯`·.¸¸.·´¯¯`·.¸¸.·´¯`·.¸¸.·´¯`·.¸¸.·´¯`·.¸¸.·´¯`·.¸¸.·´¯`·.¸¸.·´¯`·.¸¸.·´¯`·.¸¸.·´¯¯`·.¸¸.·´¯`·.¸¸.·´¯`·.¸¸.·´¯`·.¸¸.·´)\n";
         final String CENTER = "                                                               ";
         final String MID_CENTER = "           ";
@@ -59,7 +60,7 @@ public class BattagliaNavale {
                 // SETTINGS:
                 int N;
                 do {
-                    System.out.print(CENTER +"Inserisci la grandezza della plancia (MIN: 5): ");
+                    System.out.print(CENTER +"   Inserisci la grandezza della plancia (MIN: 5): ");
                     N = input.nextInt();
                 }while (N<5);
                 // Generate an empty table for each player,
@@ -73,7 +74,7 @@ public class BattagliaNavale {
                 int hpPlayer = dimShip*numShip;
                 int hpBot = dimShip*numShip;
                 System.out.println();
-                // Init the variables for the position of the ships
+                // Declaration of the variables for the position of the ships
                 boolean valid;
                 int x;
                 int y;
@@ -103,7 +104,7 @@ public class BattagliaNavale {
                         orientation = input.nextInt();
                         // Control if the ship can be built in the table
                         if (validateInput(orientation)
-                                && validateShipBuild(playerTable, x, y, orientation, dimShip)){
+                                && validateShipBuild(playerTable, x, y, orientation, dimShip, false)){
                             valid = true;
                         };
                     }while(!valid);
@@ -271,7 +272,7 @@ public class BattagliaNavale {
     }
 
 //  CHECKERs  /////////
-    public static boolean validateShipBuild(String[][] table, int x, int y, int orientation, int shipLength){
+    public static boolean validateShipBuild(String[][] table, int x, int y, int orientation, int shipLength, boolean bot){
         // Check if it's possible to create an n-dimensional ship, returns true if there is no overflow
         boolean overflow = false;
         if (validatePoint(table, x, y)){
@@ -288,7 +289,7 @@ public class BattagliaNavale {
                 }
             }
         } else overflow = true;
-        if (overflow){
+        if (overflow && !bot){
             System.out.println("===== !ERROR! ===== !ERROR! ===== !ERROR! ========== !ERROR! ===== !ERROR! ===== !ERROR! =====");
             System.out.println("La nave non entra nella plancia oppure si scontra con un'altra nave, controlla le coordinate ed il verso");
             System.out.println();
@@ -393,7 +394,7 @@ public class BattagliaNavale {
             y = random.nextInt(botTable.length); // same
             orientation = random.nextInt(4) * 2 + 2; // Returns only 2 4 6 8
             if (validateInput(orientation)
-                    && validateShipBuild(botTable, x, y, orientation, shipLength)){
+                    && validateShipBuild(botTable, x, y, orientation, shipLength, true)){
                 valid = true;
             }
         }while(!valid);
