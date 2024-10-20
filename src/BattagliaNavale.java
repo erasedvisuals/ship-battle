@@ -22,142 +22,152 @@ public class BattagliaNavale {
         sep(2);
         // MAIN
         do{
-            // INTRO MENU:
-            if (!skip) {
-                do {
-                    int choice;
-                    System.out.println(CENTER + "Premi [0] -> GIOCA! ");
-                    System.out.println(CENTER + "Premi [1] -> REGOLAMENTO");
-                    System.out.println(CENTER + "Premi [2] -> ESCI");
-                    System.out.print(CENTER + "-> : ...");
-                    choice = input.nextInt();
-                    switch (choice) {
-                        case 0:// PLAY
-                            System.out.println(CENTER + "Bene!");
-                            sep(2);
-                            skip = true;
-                            break;
-                        case 1:// RULES
-                            sep(2);
-                            System.out.println(CENTER +"Scegli la dimensione della plancia digitando un numero (MIN:5)");
-                            System.out.println(CENTER +"Scegli dove posizionare le tue navi digitando le coordinate [RIGA][COLONNA] ed il loro VERSO (es. verso destra");
-                            System.out.println(CENTER +"Ti alternerai con il computer nello sparare colpi. Dovrai digitare le coordinate per scegliere dove vuoi sparare.");
-                            System.out.println(CENTER +"'X' segnerà che il colpo è andato a segno, 'O' che lo hai mancato.");
-                            System.out.println(CENTER +"Vince chi prima distrugge le navi avversarie \n");
-                            break;
-                        case 2:// EXIT
-                            System.out.println(CENTER +"Uscita dal gioco...");
-                            skip = true;
-                            gameOver = true;
-                            break;
-                        default:// ERROR
-                            System.out.println(CENTER +"Scelta non valida...");
-                    }
-                } while (!skip);
-            }
-            // GAME:
-            if (!gameOver){
-                // SETTINGS:
-                int N;
-                do {
-                    System.out.print(CENTER +"   Inserisci la grandezza della plancia (MIN: 5): ");
-                    N = input.nextInt();
-                }while (N<5);
-                // Generate an empty table for each player,
-                // to display and to track the player actions,
-                String[][] playerTable = generateTable(N);
-                String[][] botTable = generateTable(N);
-                String[][] gameTable = generateTable(N);
-                // and set the game variables
-                int numShip = N/5;
-                int dimShip = N/5+1;
-                int hpPlayer = dimShip*numShip;
-                int hpBot = dimShip*numShip;
-                System.out.println();
-                // Declaration of the variables for the position of the ships
-                boolean valid;
-                int x;
-                int y;
-                int orientation;
-                // BUILDING
-                for (int i = 1; i < numShip+1; i++) {
-                // Check if the ship CAN be created
-                    valid=false;
+            try {
+                // INTRO MENU:
+                if (!skip) {
                     do {
-                        // Displays a table for a better UX
-                        printTable(playerTable);
-                        //
-                        System.out.println(CENTER + "Hai a disposizione "+ numShip + " nave/i di dimensione " + dimShip);
-                        System.out.println(CENTER + "Stai posizionando la "+ i + "ª nave");
-                        sep(2);
-                        System.out.println(CENTER + "Dove vuoi posizionare la tua nave?");
+                        int choice;
+                        System.out.println(CENTER + "Premi [0] -> GIOCA! ");
+                        System.out.println(CENTER + "Premi [1] -> REGOLAMENTO");
+                        System.out.println(CENTER + "Premi [2] -> ESCI");
+                        System.out.print(CENTER + "-> : ...");
+                        choice = input.nextInt();
+                        switch (choice) {
+                            case 0:// PLAY
+                                System.out.println(CENTER + "Bene!");
+                                sep(2);
+                                skip = true;
+                                break;
+                            case 1:// RULES
+                                sep(2);
+                                System.out.println(CENTER +"Scegli la dimensione della plancia digitando un numero (MIN:5)");
+                                System.out.println(CENTER +"Scegli dove posizionare le tue navi digitando le coordinate [RIGA][COLONNA] ed il loro VERSO (es. verso destra");
+                                System.out.println(CENTER +"Ti alternerai con il computer nello sparare colpi. Dovrai digitare le coordinate per scegliere dove vuoi sparare.");
+                                System.out.println(CENTER +"'X' segnerà che il colpo è andato a segno, 'O' che lo hai mancato.");
+                                System.out.println(CENTER +"Vince chi prima distrugge le navi avversarie \n");
+                                break;
+                            case 2:// EXIT
+                                System.out.println(CENTER +"Uscita dal gioco...");
+                                skip = true;
+                                gameOver = true;
+                                break;
+                            default:// ERROR
+                                System.out.println(CENTER +"Scelta non valida...");
+                        }
+                    } while (!skip);
+                }
+                // GAME:
+                if (!gameOver){
+                    // SETTINGS:
+                    int N;
+                    do {
+                        System.out.print(CENTER +"   Inserisci la grandezza della plancia (MIN: 5): ");
+                        N = input.nextInt();
+                    }while (N<5);
+                    // Generate an empty table for each player,
+                    // to display and to track the player actions,
+                    String[][] playerTable = generateTable(N);
+                    String[][] botTable = generateTable(N);
+                    String[][] gameTable = generateTable(N);
+                    // and set the game variables
+                    int numShip = N/5;
+                    int dimShip = N/5+1;
+                    int hpPlayer = dimShip*numShip;
+                    int hpBot = dimShip*numShip;
+                    System.out.println();
+                    // Declaration of the variables for the position of the ships
+                    // TODO: Catch mi porta qui!
+                    boolean valid;
+                    int x;
+                    int y;
+                    int orientation;
+                    // BUILDING
+                    for (int i = 1; i < numShip+1; i++) {
+                    // Check if the ship CAN be created
+                        valid=false;
+                        do {
+                            // Displays a table for a better UX
+                            printTable(playerTable);
+                            //
+                            System.out.println(CENTER + "Hai a disposizione "+ numShip + " nave/i di dimensione " + dimShip);
+                            System.out.println(CENTER + "Stai posizionando la "+ i + "ª nave");
+                            sep(2);
+                            System.out.println(CENTER + "Dove vuoi posizionare la tua nave?");
+                            System.out.print(CENTER + "Inserisci n° RIGA: ->");
+                            x = input.nextInt();
+                            System.out.print(CENTER + "Inserisci n° COLONNA: ->");
+                            y = input.nextInt();
+                            System.out.println(CENTER + "In che verso la vuoi posizionare?");
+                            System.out.println( CENTER + "[8] -> verso SU\n" +
+                                                CENTER + "[6] -> verso DESTRA\n" +
+                                                CENTER + "[2] -> verso GIU\n" +
+                                                CENTER + "[4] -> verso SINISTRA\n");
+                            System.out.print(CENTER + "Inserisci verso: ->");
+                            orientation = input.nextInt();
+                            // Control if the ship can be built in the table
+                            if (validateInput(orientation)
+                                    && validateShipBuild(playerTable, x, y, orientation, dimShip, false)){
+                                valid = true;
+                            };
+                        }while(!valid);
+                    // Since it passed all controls, edit the tables with the ships
+                    // V2.0: Draw n ships into the table
+                        setShip(playerTable, x, y, orientation, dimShip);
+                        System.out.println( CENTER + "[✓] Nave posizionata con successo! [✓]\n");
+                        setBotShip(botTable, dimShip);
+                    }
+                    //TURNs:
+                        System.out.println(TURN_LINE);
+                    do {
+                        // Declaration of the coordinates for the shot
+                        System.out.println(CENTER + MID_CENTER+ "<- YOUR TABLE     GAME TABLE ->");
+    //                    System.out.println(CENTER + "BOT TABLE");
+    //                    printTable(botTable);
+                        showTurn(playerTable, gameTable);
+                        System.out.println(CENTER + "Scegli le coordinate da colpire!");
                         System.out.print(CENTER + "Inserisci n° RIGA: ->");
                         x = input.nextInt();
                         System.out.print(CENTER + "Inserisci n° COLONNA: ->");
                         y = input.nextInt();
-                        System.out.println(CENTER + "In che verso la vuoi posizionare?");
-                        System.out.println( CENTER + "[8] -> verso SU\n" +
-                                            CENTER + "[6] -> verso DESTRA\n" +
-                                            CENTER + "[2] -> verso GIU\n" +
-                                            CENTER + "[4] -> verso SINISTRA\n");
-                        System.out.print(CENTER + "Inserisci verso: ->");
-                        orientation = input.nextInt();
-                        // Control if the ship can be built in the table
-                        if (validateInput(orientation)
-                                && validateShipBuild(playerTable, x, y, orientation, dimShip, false)){
-                            valid = true;
-                        };
-                    }while(!valid);
-                // Since it passed all controls, edit the tables with the ships
-                // V2.0: Draw n ships into the table
-                    setShip(playerTable, x, y, orientation, dimShip);
-                    System.out.println( CENTER + "[✓] Nave posizionata con successo! [✓]\n");
-                    setBotShip(botTable, dimShip);
-                }
-                //TURNs:
-                    System.out.println(TURN_LINE);
-                do {
-                    // Declaration of the coordinates for the shot
-                    System.out.println(CENTER + MID_CENTER+ "<- YOUR TABLE     GAME TABLE ->");
-//                    System.out.println(CENTER + "BOT TABLE");
-//                    printTable(botTable);
-                    showTurn(playerTable, gameTable);
-                    System.out.println(CENTER + "Scegli le coordinate da colpire!");
-                    System.out.print(CENTER + "Inserisci n° RIGA: ->");
-                    x = input.nextInt();
-                    System.out.print(CENTER + "Inserisci n° COLONNA: ->");
-                    y = input.nextInt();
-                    System.out.println();
-                    // If the shot is valid, do it
-                    if (validateShot(botTable, x, y, false)){
-                        // HUMAN TURN
-                        hpBot = shoot(botTable,gameTable, x, y, hpBot);
-                        //Check if the game is ended
-                        if (hpBot == 0) {
-                            gameOver = true;
-                            printTable(gameTable);
-                            System.out.println(CENTER + "°º¤ø,¸¸,ø¤º°`°º¤ø,¸¸,ø¤º°`°º¤ø");
-                            System.out.println(CENTER + "Congratulazioni! HAI VINTO!");
-                            System.out.println(CENTER + "°º¤ø,¸¸,ø¤º°`°º¤ø,¸¸,ø¤º°`°º¤ø");
-                        }
-                        // BOT TURN
-                        // If it's not ended, now it's the turn of the bot
-                        if (!gameOver) {
-                            hpPlayer = botTurn(playerTable, hpPlayer, true);
-                        }
-                        //Check if the game is ended
-                        if (hpPlayer == 0){
-                            gameOver=true;
-                            printTable(botTable);
-                            System.out.println(CENTER + "Peccato! Il BOT ha vinto.");
-                            System.out.println(CENTER + "(ノಠ益ಠ)ノ彡┻━┻ (ノಠ益ಠ)ノ彡┻━┻\n");
-                        }
+                        System.out.println();
+                        // If the shot is valid, do it
+                        if (validateShot(botTable, x, y, false)){
+                            // HUMAN TURN
+                            hpBot = shoot(botTable,gameTable, x, y, hpBot);
+                            //Check if the game is ended
+                            if (hpBot == 0) {
+                                gameOver = true;
+                                printTable(gameTable);
+                                System.out.println(CENTER + "°º¤ø,¸¸,ø¤º°`°º¤ø,¸¸,ø¤º°`°º¤ø");
+                                System.out.println(CENTER + "Congratulazioni! HAI VINTO!");
+                                System.out.println(CENTER + "°º¤ø,¸¸,ø¤º°`°º¤ø,¸¸,ø¤º°`°º¤ø");
+                            }
+                            // BOT TURN
+                            // If it's not ended, now it's the turn of the bot
+                            if (!gameOver) {
+                                hpPlayer = botTurn(playerTable, hpPlayer, true);
+                            }
+                            //Check if the game is ended
+                            if (hpPlayer == 0){
+                                gameOver=true;
+                                printTable(botTable);
+                                System.out.println(CENTER + "Peccato! Il BOT ha vinto.");
+                                System.out.println(CENTER + "(ノಠ益ಠ)ノ彡┻━┻ (ノಠ益ಠ)ノ彡┻━┻\n");
+                            }
 
-                    }
-                    System.out.println(TURN_LINE);
-                }while (!gameOver);
+                        }
+                        System.out.println(TURN_LINE);
+                    }while (!gameOver);
+                }
+                // END
             }
-            // END
+            catch (Exception e) {
+                System.out.println("===== !ERROR! ===== !ERROR! ===== !ERROR! ========== !ERROR! ===== !ERROR! ===== !ERROR! =====");
+                System.out.println("ERRORE: \n Inserisci solo numeri!!");
+                System.out.println();
+                input.nextLine();
+
+            }
         }while (!gameOver);
         sep(2);
         System.out.println(CENTER + "Grazie per aver giocato!");
